@@ -1,23 +1,26 @@
 #!/usr/bin/env bash
 # Zoek in Pi sessie-logs (JSONL) voor fouten, modellen, providers
-# Gebruik: bash scripts/search-pi-logs.sh [zoekterm] [--type error|user|all] [--model glm] [--provider zai]
+# Gebruik: bash scripts/search-pi-logs.sh [opties]
+#   --zoekterm "term"    Filter op tekst
+#   --type error|user|all
+#   --model glm          Filter op model (regex)
+#   --provider zai       Filter op provider (regex)
 set -euo pipefail
 
 SESSION_DIR="${PI_SESSION_DIR:-$HOME/.pi/agent/sessions}"
-ZOEKTERM="${1:-}"
-TYPE="${2:---type}"
-TYPE_VAL="${3:-all}"
+ZOEKTERM=""
+TYPE_VAL="all"
 MODEL_FILTER=""
 PROVIDER_FILTER=""
 
-# Parse args
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --type) TYPE_VAL="$2"; shift 2;;
-        --model) MODEL_FILTER="$2"; shift 2;;
-        --provider) PROVIDER_FILTER="$2"; shift 2;;
+        --zoekterm|-z) ZOEKTERM="$2"; shift 2;;
+        --type|-t) TYPE_VAL="$2"; shift 2;;
+        --model|-m) MODEL_FILTER="$2"; shift 2;;
+        --provider|-p) PROVIDER_FILTER="$2"; shift 2;;
         --help|-h)
-            echo "Usage: $0 [zoekterm] [--type error|user|all] [--model glm] [--provider zai]"
+            echo "Usage: $0 [--zoekterm term] [--type error|user|all] [--model glm] [--provider zai]"
             exit 0;;
         *) ZOEKTERM="$1"; shift;;
     esac
