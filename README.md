@@ -16,7 +16,7 @@ Een Pi skill die de agent leert om **niet-interactive** zoek- en filtercommando'
 
 ```bash
 # Kloon deze repo naar je Pi skills directory
-git clone git@github.com:OnlineChefGroep/pi-cli-search-tools.git ~/.agents/skills/cli-search-tools
+git clone git@github.com:GroepOnline/pi-cli-search-tools.git ~/.agents/skills/cli-search-tools
 ```
 
 Of voeg toe aan je Pi settings:
