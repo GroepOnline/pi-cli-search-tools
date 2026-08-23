@@ -1,25 +1,30 @@
 # pi-cli-search-tools
 
-CLI search & filter tools skill voor [Pi.dev](https://pi.dev) — de power-user toolkit voor ripgrep, fzf, jq, awk, sed, grep, find en pipe compositions.
+Power-user search and filtering skill for [Pi](https://pi.dev): ripgrep, fzf, jq, awk, sed, grep, find, xargs, and non-interactive pipe compositions.
 
-## Wat is dit?
-
-Een Pi skill die de agent leert om **niet-interactive** zoek- en filtercommando's te gebruiken:
-
-- **ripgrep (rg)**: Snelle tekst-zoek met `--json` output voor pipe-verwerking
-- **fzf**: Fuzzy finder in non-interactive mode (`--filter`, `--query`)
-- **jq**: JSON query-taal voor gestructureerde data
-- **awk/sed/grep**: Klassieke Unix text-processing
-- **Pipe compositions**: Samengestelde pipelines voor log-analyse, code-exploratie, data wrangling
-
-## Installatie
+## Install with Pi
 
 ```bash
-# Kloon deze repo naar je Pi skills directory
-git clone git@github.com:GroepOnline/pi-cli-search-tools.git ~/.agents/skills/cli-search-tools
+pi install npm:@groeponline/pi-cli-search-tools
 ```
 
-Of voeg toe aan je Pi settings:
+The npm package exposes `SKILL.md` directly through its Pi manifest, so Pi loads the `cli-search-tools` skill automatically.
+
+## What it covers
+
+- **ripgrep (`rg`)**: fast text search, JSON output, file filtering, context and counts
+- **fzf**: non-interactive fuzzy filtering with `--filter` and `--query`
+- **jq**: structured JSON extraction, filtering and transformations
+- **awk / sed / grep / find / xargs**: composable Unix text-processing patterns
+- **pipe compositions**: practical recipes for logs, code exploration and data wrangling
+
+## Git install
+
+```bash
+git clone https://github.com/GroepOnline/pi-cli-search-tools.git ~/.agents/skills/cli-search-tools
+```
+
+Or point Pi at the cloned skill in settings:
 
 ```json
 {
@@ -27,18 +32,10 @@ Of voeg toe aan je Pi settings:
 }
 ```
 
-## Scripts
+## Included helper
 
-- `scripts/search-pi-logs.sh` — Doorzoek Pi sessie-logs (JSONL) met filters
+`scripts/search-pi-logs.sh` searches Pi session JSONL logs with non-interactive filters.
 
-## Gebruik
+## License
 
-De skill wordt automatisch geladen door Pi wanneer een taak past bij search/filter/analyse.
-
-```bash
-/skill:cli-search-tools
-```
-
-## Licentie
-
-Private — ChefGroep fleet only.
+MIT

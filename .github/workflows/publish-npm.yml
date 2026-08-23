@@ -1,0 +1,82 @@
+name: Publish npm package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - package.json
+      - README.md
+      - SKILL.md
+      - scripts/**
+      - .github/workflows/publish-npm.yml
+  workflow_dispatch:
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    if: github.repository == 'GroepOnline/pi-cli-search-tools'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install --global npm@11.5.1
+      - name: Verify package contents
+        run: |
+          npm pack --dry-run --json > "$RUNNER_TEMP/pack.json"
+          node -e '
+            const fs = require("fs");
+            const packed = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/pack.json", "utf8"))[0];
+            const files = packed.files.map((f) => f.path);
+            const allowed = /^(?:SKILL\.md|README\.md|LICENSE|package\.json|scripts\/.+)$/;
+            if (!files.includes("SKILL.md")) {
+              console.error("SKILL.md missing from tarball");
+              process.exit(1);
+            }
+            const unexpected = files.filter((f) => !allowed.test(f));
+            if (unexpected.length) {
+              console.error("Unexpected files in tarball:\n" + unexpected.join("\n"));
+              process.exit(1);
+            }
+            console.log(files.length + " files, all within allowlist");
+          '
+      - name: Read package identity
+        id: package
+        run: |
+          package_name=$(node -p "require('./package.json').name")
+          package_version=$(node -p "require('./package.json').version")
+          printf 'name=%s\nversion=%s\n' "$package_name" "$package_version" >> "$GITHUB_OUTPUT"
+      - name: Check registry
+        id: registry
+        env:
+          PACKAGE_NAME: ${{ steps.package.outputs.name }}
+          PACKAGE_VERSION: ${{ steps.package.outputs.version }}
+        run: |
+          view_output=$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version --json 2>&1) && status=0 || status=$?
+          if [ "$status" -eq 0 ]; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          elif printf '%s' "$view_output" | grep -q 'E404'; then
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "npm view failed with exit status $status; not treating as unpublished:" >&2
+            printf '%s\n' "$view_output" >&2
+            exit 1
+          fi
+      - name: Publish to npmjs.org
+        if: steps.registry.outputs.published != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          test -n "$NODE_AUTH_TOKEN" || { echo 'NPM_TOKEN is required for initial publish' >&2; exit 1; }
+          npm publish --access public --provenance

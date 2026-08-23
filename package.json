@@ -1,0 +1,41 @@
+{
+  "name": "@groeponline/pi-cli-search-tools",
+  "version": "0.1.0",
+  "description": "Power-user CLI search and filtering skill for Pi agents: ripgrep, fzf, jq, awk, sed, grep, find, xargs, and pipe compositions.",
+  "license": "MIT",
+  "author": "GroepOnline",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GroepOnline/pi-cli-search-tools.git"
+  },
+  "homepage": "https://github.com/GroepOnline/pi-cli-search-tools#readme",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-skill",
+    "pi-coding-agent",
+    "agent-skill",
+    "cli",
+    "search",
+    "ripgrep",
+    "fzf",
+    "jq",
+    "groeponline"
+  ],
+  "pi": {
+    "skills": ["./SKILL.md"]
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "scripts"
+  ],
+  "scripts": {
+    "pack:check": "npm pack --dry-run --json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}
