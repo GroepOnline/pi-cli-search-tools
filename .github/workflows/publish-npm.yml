@@ -39,7 +39,7 @@ jobs:
             const fs = require("fs");
             const packed = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/pack.json", "utf8"))[0];
             const files = packed.files.map((f) => f.path);
-            const allowed = /^(SKILL\.md|README\.md|LICENSE|package\.json|scripts\/)/;
+            const allowed = /^(?:SKILL\.md|README\.md|LICENSE|package\.json|scripts\/.+)$/;
             if (!files.includes("SKILL.md")) {
               console.error("SKILL.md missing from tarball");
               process.exit(1);
