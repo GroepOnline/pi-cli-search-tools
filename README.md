@@ -1,30 +1,54 @@
-# pi-cli-search-tools
+<h1 align="center">Pi CLI Search Tools</h1>
 
-Power-user search and filtering skill for [Pi](https://pi.dev): ripgrep, fzf, jq, awk, sed, grep, find, xargs, and non-interactive pipe compositions.
+<p align="center"><strong>Give Pi better command-line search instincts.</strong><br>Teach agents practical, non-interactive patterns for ripgrep, fzf, jq, awk, sed, grep, find, xargs and pipe-heavy investigation.</p>
 
-## Install with Pi
+<p align="center">
+  <a href="https://www.npmjs.com/package/@groeponline/pi-cli-search-tools"><img src="https://img.shields.io/npm/v/@groeponline/pi-cli-search-tools.svg" alt="npm version"></a>
+  <a href="https://pi.dev/packages/@groeponline/pi-cli-search-tools"><img src="https://img.shields.io/badge/Pi-package-9b59b6.svg" alt="Pi package"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT license"></a>
+</p>
+
+## Start in 10 seconds
 
 ```bash
 pi install npm:@groeponline/pi-cli-search-tools
 ```
 
-The npm package exposes `SKILL.md` directly through its Pi manifest, so Pi loads the `cli-search-tools` skill automatically.
+The package exposes `SKILL.md` through its Pi manifest, so the `cli-search-tools` skill loads automatically.
 
-## What it covers
+## What changes after install
 
-- **ripgrep (`rg`)**: fast text search, JSON output, file filtering, context and counts
-- **fzf**: non-interactive fuzzy filtering with `--filter` and `--query`
-- **jq**: structured JSON extraction, filtering and transformations
-- **awk / sed / grep / find / xargs**: composable Unix text-processing patterns
-- **pipe compositions**: practical recipes for logs, code exploration and data wrangling
+Instead of reaching for ad-hoc shell pipelines, the agent gets reusable patterns for:
 
-## Git install
+- **ripgrep (`rg`)** — scoped code search, context, counts, file filters and JSON output;
+- **fzf** — deterministic non-interactive filtering with `--filter` and `--query`;
+- **jq** — extracting, reshaping and filtering structured JSON;
+- **awk / sed / grep / find / xargs** — composable text and filesystem investigation;
+- **pipe compositions** — logs, repository discovery and lightweight data wrangling.
+
+## Typical use
+
+Ask Pi to use the skill when a task needs broad search or shell-side filtering, for example:
+
+```text
+Use cli-search-tools to find every place this config key is read, group matches by package, and show only unique files.
+```
+
+Or:
+
+```text
+Use cli-search-tools to inspect these JSONL logs and summarize the most common failing tool names.
+```
+
+The skill favors non-interactive commands so runs remain reproducible and agent-friendly.
+
+## Install from git
 
 ```bash
 git clone https://github.com/GroepOnline/pi-cli-search-tools.git ~/.agents/skills/cli-search-tools
 ```
 
-Or point Pi at the cloned skill in settings:
+Or point Pi at the cloned skill:
 
 ```json
 {
@@ -38,4 +62,4 @@ Or point Pi at the cloned skill in settings:
 
 ## License
 
-MIT
+MIT © GroepOnline
