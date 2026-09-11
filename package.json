@@ -23,13 +23,17 @@
     "groeponline"
   ],
   "pi": {
-    "skills": ["./SKILL.md"]
+    "skills": [
+      "./SKILL.md"
+    ],
+    "image": "https://raw.githubusercontent.com/GroepOnline/pi-cli-search-tools/main/docs/images/cli-search-flow.png"
   },
   "files": [
     "SKILL.md",
     "README.md",
     "LICENSE",
-    "scripts"
+    "scripts",
+    "docs/images/cli-search-flow.png"
   ],
   "scripts": {
     "pack:check": "npm pack --dry-run --json"

@@ -8,6 +8,12 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT license"></a>
 </p>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GroepOnline/pi-cli-search-tools/main/docs/images/cli-search-flow.svg" alt="Pi CLI Search Tools turns a coding question into a deterministic non-interactive shell pipeline" width="100%">
+</p>
+
+The skill does not add another search service. It teaches Pi when to use the shell tools already on the machine and how to compose them without interactive dead ends.
+
 ## Start in 10 seconds
 
 ```bash
